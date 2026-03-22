@@ -1,5 +1,7 @@
 import axios from 'axios'
 
+console.log('API KEY:', import.meta.env.VITE_RAPID_API_KEY)
+
 const api = axios.create({
   baseURL: 'https://airbnb19.p.rapidapi.com',
   headers: {
