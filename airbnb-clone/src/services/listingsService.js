@@ -1,6 +1,4 @@
 import api from './api'
-
-// Mock data to use when API rate limit is hit
 export const mockListings = [
   {
     id: '1',
@@ -18,6 +16,7 @@ export const mockListings = [
     id: '2',
     name: 'Modern Studio with Sea View',
     city: 'Barcelona',
+    
     country: 'Spain',
     price: '$95/night',
     rating: '4.85',

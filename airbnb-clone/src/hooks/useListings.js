@@ -5,5 +5,6 @@ export function useListings(placeId) {
   return useQuery({
     queryKey: ['listings', placeId],
     queryFn: () => fetchListings(placeId),
+    retry: false,
   })
 }
