@@ -35,7 +35,7 @@ function Navbar() {
 
       {/* Navigation links */}
       <div style={styles.links}>
-        <Link to="/favorites" style={styles.link}>
+        <Link to="/favorates" style={styles.link}>
           ❤️ Favorites {favorites.length > 0 && (
             <span style={styles.badge}>{favorites.length}</span>
           )}

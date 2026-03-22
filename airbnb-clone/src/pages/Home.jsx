@@ -1,41 +1,43 @@
 import { useListings } from '../hooks/useListings'
-import { useAppContext } from '../context/AppContext'
-import useBookingStore from '../store/bookingStore'
+import ListingCard from '../components/ListingCard'
+import Loader from '../components/ui/loader'
+import ErrorState from '../components/ui/ErrorState'
 
 function Home() {
   const { data: listings, isLoading, isError, error } = useListings()
-  const { favorites, addFavorite, isFavorite } = useAppContext()
-  const { bookings, addBooking } = useBookingStore()
 
-  if (isLoading) return <p>Loading listings...</p>
-  if (isError) return <p>Something went wrong: {error.message}</p>
+  if (isLoading) return <Loader />
+  if (isError) return <ErrorState message={error.message} />
 
   return (
-    <div>
-      <h1>Listings</h1>
-      <p>Favorites: {favorites.length} | Bookings: {bookings.length}</p>
-
-      {listings.map((listing) => (
-        <div key={listing.id} style={{ border: '1px solid #ccc', margin: '10px', padding: '10px' }}>
-          <img src={listing.image} alt={listing.name} width="200" />
-          <h3>{listing.name}</h3>
-          <p>{listing.city}, {listing.country}</p>
-          <p>Price: {listing.price}</p>
-          <p>Rating: {listing.rating}</p>
-
-          {/* Test favorite button */}
-          <button onClick={() => addFavorite(listing)}>
-            {isFavorite(listing.id) ? '❤️ Saved' : '🤍 Save'}
-          </button>
-
-          {/* Test booking button */}
-          <button onClick={() => addBooking(listing, '2025-06-01', '2025-06-07')}>
-            Book now
-          </button>
-        </div>
-      ))}
+    <div style={styles.page}>
+      <h2 style={styles.heading}>Places to stay</h2>
+      <div style={styles.grid}>
+        {listings.map((listing) => (
+          <ListingCard key={listing.id} listing={listing} />
+        ))}
+      </div>
     </div>
   )
+}
+
+const styles = {
+  page: {
+    maxWidth: '1200px',
+    margin: '0 auto',
+    padding: '32px 24px',
+  },
+  heading: {
+    fontSize: '24px',
+    fontWeight: '600',
+    marginBottom: '24px',
+    color: '#333',
+  },
+  grid: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
+    gap: '24px',
+  },
 }
 
 export default Home
