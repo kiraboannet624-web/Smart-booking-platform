@@ -1,4 +1,25 @@
-import api from './Api'
+import api from './api'
+
+// Map of city names to their Google Place IDs
+export const cityPlaceIds = {
+  paris: 'ChIJD7fiBh9u5kcRYJSMaMOCCwQ',
+  'new york': 'ChIJOwg_06VPwokRYv534QaPC8g',
+  london: 'ChIJdd4hrwug2EcRmSrV3Vo6llI',
+  tokyo: 'ChIJ51cu8IcbXWARiRtXIothAS4',
+  dubai: 'ChIJRcbZaklDXz4RYlEphFBu5r0',
+  barcelona: 'ChIJ5TCOcRaYpBIRCmZHTz37sEQ',
+  rome: 'ChIJu46S-ZZhLxMROG5lkwZ3D7k',
+  amsterdam: 'ChIJVXealLU_xkcRja_At0z9AGQ',
+  bali: 'ChIJoQ8Q6NB1yTARNUTfaSNWNMc',
+  sydney: 'ChIJP3Sa8ziYEmsRUKgyFmh9AQM',
+}
+
+export function getPlaceId(cityName) {
+  const key = cityName.toLowerCase().trim()
+  return cityPlaceIds[key] || 'ChIJD7fiBh9u5kcRYJSMaMOCCwQ'
+}
+
+// Mock data fallback
 export const mockListings = [
   {
     id: '1',
@@ -16,7 +37,6 @@ export const mockListings = [
     id: '2',
     name: 'Modern Studio with Sea View',
     city: 'Barcelona',
-    
     country: 'Spain',
     price: '$95/night',
     rating: '4.85',
@@ -85,7 +105,6 @@ export async function fetchListings(placeId = 'ChIJD7fiBh9u5kcRYJSMaMOCCwQ') {
 
     const results = response.data?.data?.list || []
 
-    // If API returns empty results, fall back to mock data
     if (results.length === 0) return mockListings
 
     return results.map((item) => ({
@@ -102,7 +121,6 @@ export async function fetchListings(placeId = 'ChIJD7fiBh9u5kcRYJSMaMOCCwQ') {
     }))
 
   } catch (error) {
-    // If rate limited or any API error, use mock data
     if (error.response?.status === 429 || error.response?.status === 504) {
       console.warn('API limit reached - using mock data')
       return mockListings

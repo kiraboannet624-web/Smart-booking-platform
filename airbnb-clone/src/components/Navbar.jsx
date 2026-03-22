@@ -1,5 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom'
 import { useAppContext } from '../context/AppContext'
+import { cityPlaceIds } from '../services/listingsService'
 
 function Navbar() {
   const { favorites } = useAppContext()
@@ -7,25 +8,29 @@ function Navbar() {
 
   function handleSearch(e) {
     e.preventDefault()
-    const query = e.target.search.value
-    if (query.trim()) {
-      navigate(`/?search=${query}`)
+    const query = e.target.search.value.toLowerCase().trim()
+    if (query) {
+      // Check if we have a place ID for this city
+      const placeId = cityPlaceIds[query]
+      if (placeId) {
+        navigate(`/?placeId=${placeId}&city=${query}`)
+      } else {
+        alert(`Try one of these cities: ${Object.keys(cityPlaceIds).join(', ')}`)
+      }
     }
   }
 
   return (
     <nav style={styles.nav}>
-      {/* Logo */}
       <Link to="/" style={styles.logo}>
         🏠 StayFinder
       </Link>
 
-      {/* Search bar */}
       <form onSubmit={handleSearch} style={styles.searchForm}>
         <input
           name="search"
           type="text"
-          placeholder="Search destinations..."
+          placeholder="Try: Paris, London, Tokyo, Dubai..."
           style={styles.searchInput}
         />
         <button type="submit" style={styles.searchButton}>
@@ -33,7 +38,6 @@ function Navbar() {
         </button>
       </form>
 
-      {/* Navigation links */}
       <div style={styles.links}>
         <Link to="/favorates" style={styles.link}>
           ❤️ Favorites {favorites.length > 0 && (
@@ -78,7 +82,7 @@ const styles = {
     borderRadius: '24px',
     border: '1px solid #e0e0e0',
     fontSize: '14px',
-    width: '280px',
+    width: '320px',
     outline: 'none',
   },
   searchButton: {
@@ -100,7 +104,6 @@ const styles = {
     color: '#333',
     fontSize: '14px',
     fontWeight: '500',
-    position: 'relative',
   },
   badge: {
     backgroundColor: '#FF385C',

@@ -6,6 +6,6 @@ export function useListings(placeId) {
     queryKey: ['listings', placeId],
     queryFn: () => fetchListings(placeId),
     retry: false,
-     refetchOnWindowFocus: false,
+    refetchOnWindowFocus: false,
   })
 }
