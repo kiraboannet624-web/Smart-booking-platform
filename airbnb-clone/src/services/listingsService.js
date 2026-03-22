@@ -1,4 +1,4 @@
-import api from './api'
+import api from './Api'
 
 // Map of city names to their Google Place IDs
 export const cityPlaceIds = {

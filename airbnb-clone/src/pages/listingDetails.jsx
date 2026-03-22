@@ -2,7 +2,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { useListings } from '../hooks/useListings'
 import { useAppContext } from '../context/AppContext'
 import useBookingStore from '../store/bookingStore'
-import Loader from '../components/ui/Loader'
+import Loader from '../components/ui/loader'
 import ErrorState from '../components/ui/ErrorState'
 import { useState } from 'react'
 

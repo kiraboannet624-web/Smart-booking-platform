@@ -6,7 +6,7 @@ import Booking from './pages/Booking'
 import Favorates from './pages/Favorates'
 import Login from './pages/Login'
 
-const isLoggedIn = false
+const isLoggedIn = true
 
 function ProtectedRoute({ children }) {
   if (!isLoggedIn) {

@@ -2,7 +2,7 @@ import { useAppContext } from '../context/AppContext'
 import ListingCard from '../components/ListingCard'
 import { useNavigate } from 'react-router-dom'
 
-function Favorites() {
+function Favorates() {
   const { favorites } = useAppContext()
   const navigate = useNavigate()
 
@@ -94,4 +94,4 @@ const styles = {
   },
 }
 
-export default Favorites
+export default Favorates
