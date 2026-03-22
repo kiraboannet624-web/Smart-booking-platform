@@ -6,19 +6,26 @@ import Booking from './pages/Booking'
 import Favorates from './pages/Favorates'
 import Login from './pages/Login'
 
-const isLoggedIn = true
+// Read user from localStorage - real auth state
+function getUser() {
+  const user = localStorage.getItem('user')
+  return user ? JSON.parse(user) : null
+}
 
 function ProtectedRoute({ children }) {
-  if (!isLoggedIn) {
+  const user = getUser()
+  if (!user) {
     return <Navigate to="/login" replace />
   }
   return children
 }
 
 function App() {
+  const user = getUser()
+
   return (
     <BrowserRouter>
-      <Navbar />
+      <Navbar user={user} />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/listing/:id" element={<ListingDetails />} />
